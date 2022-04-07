@@ -1,0 +1,174 @@
+{
+  "info": {
+    "author": "Simon Willison",
+    "author_email": "",
+    "bugtrack_url": null,
+    "classifiers": [],
+    "description": "# datasette-block\n\n[![PyPI](https://img.shields.io/pypi/v/datasette-block.svg)](https://pypi.org/project/datasette-block/)\n[![Changelog](https://img.shields.io/github/v/release/simonw/datasette-block?include_prereleases&label=changelog)](https://github.com/simonw/datasette-block/releases)\n[![Tests](https://github.com/simonw/datasette-block/workflows/Test/badge.svg)](https://github.com/simonw/datasette-block/actions?query=workflow%3ATest)\n[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/datasette-block/blob/main/LICENSE)\n\nBlock all access to specific path prefixes\n\n## Installation\n\nInstall this plugin in the same environment as Datasette.\n\n    $ datasette install datasette-block\n\n## Configuration\n\nAdd the following to `metadata.json` to block specific path prefixes:\n\n```json\n{\n    \"plugins\": {\n        \"datasette-block\": {\n            \"prefixes\": [\"/all/\"]\n        }\n    }\n}\n```\n\nThis will cause a 403 error to be returned for any path beginning with `/all/`.\n\nThis blocking happens as an ASGI wrapper around Datasette.\n\n## Why would you need this?\n\nYou almost always would not. I use it with `datasette-ripgrep` to block access to static assets for unauthenticated users.\n\n## Development\n\nTo set up this plugin locally, first checkout the code. Then create a new virtual environment:\n\n    cd datasette-block\n    python3 -mvenv venv\n    source venv/bin/activate\n\nOr if you are using `pipenv`:\n\n    pipenv shell\n\nNow install the dependencies and tests:\n\n    pip install -e '.[test]'\n\nTo run the tests:\n\n    pytest\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": "",
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "home_page": "https://github.com/simonw/datasette-block",
+    "keywords": "",
+    "license": "Apache License, Version 2.0",
+    "maintainer": "",
+    "maintainer_email": "",
+    "name": "datasette-block",
+    "package_url": "https://pypi.org/project/datasette-block/",
+    "platform": "",
+    "project_url": "https://pypi.org/project/datasette-block/",
+    "project_urls": {
+      "CI": "https://github.com/simonw/datasette-block/actions",
+      "Changelog": "https://github.com/simonw/datasette-block/releases",
+      "Homepage": "https://github.com/simonw/datasette-block",
+      "Issues": "https://github.com/simonw/datasette-block/issues"
+    },
+    "release_url": "https://pypi.org/project/datasette-block/0.1.1/",
+    "requires_dist": [
+      "datasette",
+      "pytest ; extra == 'test'",
+      "pytest-asyncio ; extra == 'test'",
+      "asgi-lifespan ; extra == 'test'"
+    ],
+    "requires_python": ">=3.6",
+    "summary": "Block all access to specific path prefixes",
+    "version": "0.1.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 9518867,
+  "releases": {
+    "0.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "2abc2a204218118fc7daa994fce593b5",
+          "sha256": "ac06c3f294a8b405ecdfb5f89c16266a80798eae1bc77a82531180b67d9d1914"
+        },
+        "downloads": -1,
+        "filename": "datasette_block-0.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "2abc2a204218118fc7daa994fce593b5",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 2693,
+        "upload_time": "2021-02-25T04:53:15",
+        "upload_time_iso_8601": "2021-02-25T04:53:15.223620Z",
+        "url": "https://files.pythonhosted.org/packages/3f/a9/8e23c6d16fa54a43834f962ec1e59129e07ad4b2dee12016c3b950ef466d/datasette_block-0.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "1f224b3f1f7a71d2e4d357f7019f348b",
+          "sha256": "f83c8b8c946f4df681fefae17111fa1c5f3886fec19291fe649fb2b2bfb41819"
+        },
+        "downloads": -1,
+        "filename": "datasette-block-0.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "1f224b3f1f7a71d2e4d357f7019f348b",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 2627,
+        "upload_time": "2021-02-25T04:53:16",
+        "upload_time_iso_8601": "2021-02-25T04:53:16.023853Z",
+        "url": "https://files.pythonhosted.org/packages/a4/65/56e327849adeeff343a326507c6fd99b2bd5e94ce914fed9bff5132305c5/datasette-block-0.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ],
+    "0.1.1": [
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "0b17f46dc561b7383805229ae1f0ee1a",
+          "sha256": "d5cab33630a17cdae30fe6743c30429c1c64d3e6c37416a51446f7b02b233a81"
+        },
+        "downloads": -1,
+        "filename": "datasette_block-0.1.1-py3-none-any.whl",
+        "has_sig": false,
+        "md5_digest": "0b17f46dc561b7383805229ae1f0ee1a",
+        "packagetype": "bdist_wheel",
+        "python_version": "py3",
+        "requires_python": ">=3.6",
+        "size": 2738,
+        "upload_time": "2021-02-25T05:04:43",
+        "upload_time_iso_8601": "2021-02-25T05:04:43.668151Z",
+        "url": "https://files.pythonhosted.org/packages/13/48/f6a9e86abd6d660ed68050fcd62fb6f66456e88f2cefc998d3ac2929429c/datasette_block-0.1.1-py3-none-any.whl",
+        "yanked": false,
+        "yanked_reason": null
+      },
+      {
+        "comment_text": "",
+        "digests": {
+          "md5": "a14760ac0623622c341d91e4c4d4c2e5",
+          "sha256": "d5334ade62c61b53b72143de9c6edfbf8ef9712bd6d5b318685e7e63cebdfa60"
+        },
+        "downloads": -1,
+        "filename": "datasette-block-0.1.1.tar.gz",
+        "has_sig": false,
+        "md5_digest": "a14760ac0623622c341d91e4c4d4c2e5",
+        "packagetype": "sdist",
+        "python_version": "source",
+        "requires_python": ">=3.6",
+        "size": 2639,
+        "upload_time": "2021-02-25T05:04:44",
+        "upload_time_iso_8601": "2021-02-25T05:04:44.398585Z",
+        "url": "https://files.pythonhosted.org/packages/8b/36/b75da8cc429975d7a01d8e3262f18ddf974cea0f335cb5f890fb6e45151e/datasette-block-0.1.1.tar.gz",
+        "yanked": false,
+        "yanked_reason": null
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "0b17f46dc561b7383805229ae1f0ee1a",
+        "sha256": "d5cab33630a17cdae30fe6743c30429c1c64d3e6c37416a51446f7b02b233a81"
+      },
+      "downloads": -1,
+      "filename": "datasette_block-0.1.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "0b17f46dc561b7383805229ae1f0ee1a",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.6",
+      "size": 2738,
+      "upload_time": "2021-02-25T05:04:43",
+      "upload_time_iso_8601": "2021-02-25T05:04:43.668151Z",
+      "url": "https://files.pythonhosted.org/packages/13/48/f6a9e86abd6d660ed68050fcd62fb6f66456e88f2cefc998d3ac2929429c/datasette_block-0.1.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": "",
+      "digests": {
+        "md5": "a14760ac0623622c341d91e4c4d4c2e5",
+        "sha256": "d5334ade62c61b53b72143de9c6edfbf8ef9712bd6d5b318685e7e63cebdfa60"
+      },
+      "downloads": -1,
+      "filename": "datasette-block-0.1.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "a14760ac0623622c341d91e4c4d4c2e5",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.6",
+      "size": 2639,
+      "upload_time": "2021-02-25T05:04:44",
+      "upload_time_iso_8601": "2021-02-25T05:04:44.398585Z",
+      "url": "https://files.pythonhosted.org/packages/8b/36/b75da8cc429975d7a01d8e3262f18ddf974cea0f335cb5f890fb6e45151e/datasette-block-0.1.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}
