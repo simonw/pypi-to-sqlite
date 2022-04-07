@@ -32,6 +32,6 @@ setup(
         pypi-to-sqlite=pypi_to_sqlite.cli:cli
     """,
     install_requires=["click", "sqlite-utils", "httpx"],
-    extras_require={"test": ["pytest", "pytest-httpx"]},
+    extras_require={"test": ["pytest", "pytest-httpx", "cogapp"]},
     python_requires=">=3.7",
 )

@@ -24,6 +24,99 @@ You can also process JSON that you have previously saved to disk like so:
     curl -o datasette.json https://pypi.org/pypi/datasette/json
     pypi-to-sqlite pypi.db -f datasette.json
 
+## Database schema
+
+<!-- [[[cog
+import cog, json
+from pypi_to_sqlite import cli
+from click.testing import CliRunner
+import sqlite_utils
+import tempfile, pathlib
+tmpdir = pathlib.Path(tempfile.mkdtemp())
+db_path = str(tmpdir / "pypi.db")
+runner = CliRunner()
+result = runner.invoke(cli.cli, [db_path, "-f", "tests/datasette-block.json"])
+cog.out("```sql\n")
+cog.out(sqlite_utils.Database(db_path).schema)
+cog.out("\n```")
+]]] -->
+```sql
+CREATE TABLE [packages] (
+   [name] TEXT PRIMARY KEY,
+   [summary] TEXT,
+   [classifiers] TEXT,
+   [description] TEXT,
+   [author] TEXT,
+   [author_email] TEXT,
+   [description_content_type] TEXT,
+   [home_page] TEXT,
+   [keywords] TEXT,
+   [license] TEXT,
+   [maintainer] TEXT,
+   [maintainer_email] TEXT,
+   [package_url] TEXT,
+   [platform] TEXT,
+   [project_url] TEXT,
+   [project_urls] TEXT,
+   [release_url] TEXT,
+   [requires_dist] TEXT,
+   [requires_python] TEXT,
+   [version] TEXT,
+   [yanked] INTEGER,
+   [yanked_reason] TEXT
+);
+CREATE TABLE [releases] (
+   [package] TEXT REFERENCES [packages]([name]),
+   [version] TEXT,
+   [packagetype] TEXT,
+   [filename] TEXT,
+   [comment_text] TEXT,
+   [digests] TEXT,
+   [downloads] INTEGER,
+   [has_sig] INTEGER,
+   [md5_digest] TEXT PRIMARY KEY,
+   [python_version] TEXT,
+   [requires_python] TEXT,
+   [size] INTEGER,
+   [upload_time] TEXT,
+   [upload_time_iso_8601] TEXT,
+   [url] TEXT,
+   [yanked] INTEGER,
+   [yanked_reason] TEXT
+);
+```
+<!-- [[[end]]] -->
+
+## pypi-to-sqlite --help
+
+<!-- [[[cog
+result = runner.invoke(cli.cli, ["--help"])
+cog.out("```\n")
+cog.out(result.output.replace("Usage: cli", "Usage: pypi-to-sqlite"))
+cog.out("\n```")
+]]] -->
+```
+Usage: pypi-to-sqlite [OPTIONS] DB_PATH [PACKAGE]...
+
+  Load data about Python packages from PyPI into SQLite
+
+  Usage example:
+
+      pypi-to-sqlite pypy.db datasette sqlite-utils
+
+  Use -f to load data from a JSON file instead:
+
+      pypi-to-sqlite pypy.db -f datasette.json
+
+Options:
+  --version            Show the version and exit.
+  -f, --file FILENAME  Import JSON from this file
+  -d, --delay FLOAT    Wait this many seconds between requests
+  --help               Show this message and exit.
+
+```
+<!-- [[[end]]] -->
+
 ## Development
 
 To contribute to this tool, first checkout the code. Then create a new virtual environment:
