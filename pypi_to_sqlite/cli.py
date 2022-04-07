@@ -67,6 +67,7 @@ def save_to_db(db, data):
     # Releases are: {"version_number": [list-of-downloads]}
     for version_number, downloads in releases.items():
         for download in downloads:
+            download.pop("downloads")
             db["releases"].insert(
                 dict(download, version=version_number, package=info["name"]),
                 column_order=("package", "version", "packagetype", "filename"),

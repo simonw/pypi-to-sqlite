@@ -72,7 +72,6 @@ CREATE TABLE [releases] (
    [filename] TEXT,
    [comment_text] TEXT,
    [digests] TEXT,
-   [downloads] INTEGER,
    [has_sig] INTEGER,
    [md5_digest] TEXT PRIMARY KEY,
    [python_version] TEXT,

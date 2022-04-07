@@ -57,7 +57,6 @@ def test_import_package(httpx_mock, use_file):
         "   [filename] TEXT,\n"
         "   [comment_text] TEXT,\n"
         "   [digests] TEXT,\n"
-        "   [downloads] INTEGER,\n"
         "   [has_sig] INTEGER,\n"
         "   [md5_digest] TEXT PRIMARY KEY,\n"
         "   [python_version] TEXT,\n"
