@@ -11,7 +11,7 @@ Load data about Python packages from PyPI into SQLite
 
 Install this tool using `pip`:
 
-    $ pip install pypi-to-sqlite
+    pip install pypi-to-sqlite
 
 ## Usage
 
