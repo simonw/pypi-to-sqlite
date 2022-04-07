@@ -65,9 +65,14 @@ CREATE TABLE [packages] (
    [yanked] INTEGER,
    [yanked_reason] TEXT
 );
+CREATE TABLE [versions] (
+   [id] TEXT PRIMARY KEY,
+   [package] TEXT REFERENCES [packages]([name]),
+   [name] TEXT
+);
 CREATE TABLE [releases] (
    [package] TEXT REFERENCES [packages]([name]),
-   [version] TEXT,
+   [version] TEXT REFERENCES [versions]([id]),
    [packagetype] TEXT,
    [filename] TEXT,
    [comment_text] TEXT,

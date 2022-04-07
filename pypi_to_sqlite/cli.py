@@ -66,11 +66,22 @@ def save_to_db(db, data):
     )
     # Releases are: {"version_number": [list-of-downloads]}
     for version_number, downloads in releases.items():
+        version_id = "{}:{}".format(info["name"], version_number)
+        db["versions"].insert(
+            {
+                "id": version_id,
+                "package": info["name"],
+                "name": version_number,
+            },
+            pk="id",
+            foreign_keys=("package",),
+            replace=True,
+        )
         for download in downloads:
             download.pop("downloads")
             db["releases"].insert(
-                dict(download, version=version_number, package=info["name"]),
+                dict(download, version=version_id, package=info["name"]),
                 column_order=("package", "version", "packagetype", "filename"),
-                foreign_keys=("package",),
+                foreign_keys=("package", "version"),
                 pk="md5_digest",
             )
