@@ -32,6 +32,14 @@ To create the tables with a prefix, use `--prefix prefix`. For example:
 
 This will create tables called `pypi_packages`, `pypi_versions` and `pypi_releases`.
 
+## Demo
+
+You can see examples of tables created using this tool running in [Datasette](https://datasette.io/) here:
+
+- [packages](https://datasette.io/content/pypi_packages)
+- [versions](https://datasette.io/content/pypi_versions)
+- [releases](https://datasette.io/content/pypi_releases)
+
 ## Database schema
 
 <!-- [[[cog
