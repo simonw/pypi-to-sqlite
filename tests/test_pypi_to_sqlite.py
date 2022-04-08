@@ -15,20 +15,8 @@ fixture = json.loads(
 def test_import_package(httpx_mock, prefix, use_file):
     args = []
     runner = CliRunner()
-    with runner.isolated_filesystem():
-        if use_file:
-            open("package.json", "w").write(json.dumps(fixture))
-            args = ["-f", "package.json"]
-        else:
-            args = ["datasette-block"]
-            httpx_mock.add_response(json=fixture)
-        if prefix:
-            args.extend(["--prefix", prefix])
-        result = runner.invoke(cli, ["pypi.db"] + args, catch_exceptions=False)
-        assert result.exit_code == 0
-        db = sqlite_utils.Database("pypi.db")
-        schema = db.schema
-    expected = (
+
+    expected_schema = (
         f"CREATE TABLE [{prefix}packages] (\n"
         "   [name] TEXT PRIMARY KEY,\n"
         "   [summary] TEXT,\n"
@@ -77,4 +65,26 @@ def test_import_package(httpx_mock, prefix, use_file):
         "   [yanked_reason] TEXT\n"
         ");"
     )
-    assert schema == expected
+
+    with runner.isolated_filesystem():
+        if use_file:
+            open("package.json", "w").write(json.dumps(fixture))
+            args = ["-f", "package.json"]
+        else:
+            args = ["datasette-block"]
+            httpx_mock.add_response(json=fixture)
+        if prefix:
+            args.extend(["--prefix", prefix])
+        result = runner.invoke(cli, ["pypi.db"] + args, catch_exceptions=False)
+        assert result.exit_code == 0
+        db = sqlite_utils.Database("pypi.db")
+        assert db.schema == expected_schema
+        assert list(db.query(f"select name from {prefix}packages")) == [
+            {"name": "datasette-block"}
+        ]
+        # Should be safe to run twice
+        result = runner.invoke(cli, ["pypi.db"] + args, catch_exceptions=False)
+        assert result.exit_code == 0
+        assert list(db.query(f"select name from {prefix}packages")) == [
+            {"name": "datasette-block"}
+        ]

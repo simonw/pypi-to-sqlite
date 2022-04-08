@@ -74,7 +74,10 @@ def save_to_db(db, data, prefix):
         info.pop(key)
     releases = data["releases"]
     db[f"{prefix}packages"].insert(
-        info, pk="name", column_order=("name", "summary", "classifiers", "description")
+        info,
+        pk="name",
+        column_order=("name", "summary", "classifiers", "description"),
+        replace=True,
     )
     # Releases are: {"version_number": [list-of-downloads]}
     for version_number, downloads in releases.items():
@@ -93,6 +96,7 @@ def save_to_db(db, data, prefix):
             download.pop("downloads")
             db[f"{prefix}releases"].insert(
                 dict(download, version=version_id, package=info["name"]),
+                pk="md5_digest",
                 column_order=(
                     "md5_digest",
                     "package",
@@ -104,5 +108,5 @@ def save_to_db(db, data, prefix):
                     ("package", f"{prefix}packages"),
                     ("version", f"{prefix}versions"),
                 ),
-                pk="md5_digest",
+                replace=True,
             )
