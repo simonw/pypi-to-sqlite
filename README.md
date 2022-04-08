@@ -24,6 +24,14 @@ You can also process JSON that you have previously saved to disk like so:
     curl -o datasette.json https://pypi.org/pypi/datasette/json
     pypi-to-sqlite pypi.db -f datasette.json
 
+The tool will create three tables: `packages`, `versions` and `releases`. The full table schema is shown below.
+
+To create the tables with a prefix, use `--prefix prefix`. For example:
+
+    pypi-to-sqlite pypi.db datasette --prefix pypi_
+
+This will create tables called `pypi_packages`, `pypi_versions` and `pypi_releases`.
+
 ## Database schema
 
 <!-- [[[cog
@@ -71,6 +79,7 @@ CREATE TABLE [versions] (
    [name] TEXT
 );
 CREATE TABLE [releases] (
+   [md5_digest] TEXT PRIMARY KEY,
    [package] TEXT REFERENCES [packages]([name]),
    [version] TEXT REFERENCES [versions]([id]),
    [packagetype] TEXT,
@@ -78,7 +87,6 @@ CREATE TABLE [releases] (
    [comment_text] TEXT,
    [digests] TEXT,
    [has_sig] INTEGER,
-   [md5_digest] TEXT PRIMARY KEY,
    [python_version] TEXT,
    [requires_python] TEXT,
    [size] INTEGER,
@@ -112,10 +120,18 @@ Usage: pypi-to-sqlite [OPTIONS] DB_PATH [PACKAGE]...
 
       pypi-to-sqlite pypy.db -f datasette.json
 
+  Created tables will be packages, versions and releases
+
+  To create tables called pypi_packages, pypi_versions, pypi_releases use
+  --prefix pypi_:
+
+      pypi-to-sqlite pypy.db datasette sqlite-utils --prefix pypi_
+
 Options:
   --version            Show the version and exit.
   -f, --file FILENAME  Import JSON from this file
   -d, --delay FLOAT    Wait this many seconds between requests
+  --prefix TEXT        Prefix to use for the created database tables
   --help               Show this message and exit.
 
 ```

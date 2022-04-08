@@ -10,8 +10,9 @@ fixture = json.loads(
 )
 
 
+@pytest.mark.parametrize("prefix", ("", "pypi_"))
 @pytest.mark.parametrize("use_file", (True, False))
-def test_import_package(httpx_mock, use_file):
+def test_import_package(httpx_mock, prefix, use_file):
     args = []
     runner = CliRunner()
     with runner.isolated_filesystem():
@@ -21,12 +22,14 @@ def test_import_package(httpx_mock, use_file):
         else:
             args = ["datasette-block"]
             httpx_mock.add_response(json=fixture)
+        if prefix:
+            args.extend(["--prefix", prefix])
         result = runner.invoke(cli, ["pypi.db"] + args, catch_exceptions=False)
         assert result.exit_code == 0
         db = sqlite_utils.Database("pypi.db")
         schema = db.schema
-    assert schema == (
-        "CREATE TABLE [packages] (\n"
+    expected = (
+        f"CREATE TABLE [{prefix}packages] (\n"
         "   [name] TEXT PRIMARY KEY,\n"
         "   [summary] TEXT,\n"
         "   [classifiers] TEXT,\n"
@@ -50,20 +53,20 @@ def test_import_package(httpx_mock, use_file):
         "   [yanked] INTEGER,\n"
         "   [yanked_reason] TEXT\n"
         ");\n"
-        "CREATE TABLE [versions] (\n"
+        f"CREATE TABLE [{prefix}versions] (\n"
         "   [id] TEXT PRIMARY KEY,\n"
-        "   [package] TEXT REFERENCES [packages]([name]),\n"
+        f"   [package] TEXT REFERENCES [{prefix}packages]([name]),\n"
         "   [name] TEXT\n"
         ");\n"
-        "CREATE TABLE [releases] (\n"
-        "   [package] TEXT REFERENCES [packages]([name]),\n"
-        "   [version] TEXT REFERENCES [versions]([id]),\n"
+        f"CREATE TABLE [{prefix}releases] (\n"
+        "   [md5_digest] TEXT PRIMARY KEY,\n"
+        f"   [package] TEXT REFERENCES [{prefix}packages]([name]),\n"
+        f"   [version] TEXT REFERENCES [{prefix}versions]([id]),\n"
         "   [packagetype] TEXT,\n"
         "   [filename] TEXT,\n"
         "   [comment_text] TEXT,\n"
         "   [digests] TEXT,\n"
         "   [has_sig] INTEGER,\n"
-        "   [md5_digest] TEXT PRIMARY KEY,\n"
         "   [python_version] TEXT,\n"
         "   [requires_python] TEXT,\n"
         "   [size] INTEGER,\n"
@@ -74,3 +77,4 @@ def test_import_package(httpx_mock, use_file):
         "   [yanked_reason] TEXT\n"
         ");"
     )
+    assert schema == expected
